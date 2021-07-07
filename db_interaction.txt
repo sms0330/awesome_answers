@@ -1,0 +1,82 @@
+    ~/Doc/Codec/awesome_answers_may_2021    main !2 ?3  rails c                                                                     ✔  3.0.0   10:23:28  
+Running via Spring preloader in process 13473
+Loading development environment (Rails 6.1.4)
+[1] pry(main)> Question.all
+  Question Load (0.4ms)  SELECT "questions".* FROM "questions"
+=> []
+[2] pry(main)> q = Question.new
+=> #<Question:0x00007f8eee1a4e18 id: nil, title: nil, body: nil, created_at: nil, updated_at: nil, view_count: nil>
+[3] pry(main)> q.title ="Whereis my question?"
+=> "Whereis my question?"
+[4] pry(main)> q
+=> #<Question:0x00007f8eee1a4e18 id: nil, title: "Whereis my question?", body: nil, created_at: nil, updated_at: nil, view_count: nil>
+[5] pry(main)> q.body = "I don't know where my question is."
+=> "I don't know where my question is."
+[6] pry(main)> q
+=> #<Question:0x00007f8eee1a4e18
+ id: nil,
+ title: "Whereis my question?",
+ body: "I don't know where my question is.",
+ created_at: nil,
+ updated_at: nil,
+ view_count: nil>
+[7] pry(main)> q.persisted?
+=> false
+[8] pry(main)> q.save
+  TRANSACTION (0.2ms)  BEGIN
+  Question Create (1.2ms)  INSERT INTO "questions" ("title", "body", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["title", "Whereis my question?"], ["body", "I don't know where my question is."], ["created_at", "2021-07-07 17:33:03.666227"], ["updated_at", "2021-07-07 17:33:03.666227"]]
+  TRANSACTION (6.4ms)  COMMIT
+=> true
+[9] pry(main)> q
+=> #<Question:0x00007f8eee1a4e18
+ id: 1,
+ title: "Whereis my question?",
+ body: "I don't know where my question is.",
+ created_at: Wed, 07 Jul 2021 17:33:03.666227000 UTC +00:00,
+ updated_at: Wed, 07 Jul 2021 17:33:03.666227000 UTC +00:00,
+ view_count: nil>
+[10] pry(main)> q.persisted?
+=> true
+[11] pry(main)> Question.all
+  Question Load (0.7ms)  SELECT "questions".* FROM "questions"
+=> [#<Question:0x00007f8eea49d5b0
+  id: 1,
+  title: "Whereis my question?",
+  body: "I don't know where my question is.",
+  created_at: Wed, 07 Jul 2021 17:33:03.666227000 UTC +00:00,
+  updated_at: Wed, 07 Jul 2021 17:33:03.666227000 UTC +00:00,
+  view_count: nil>]
+[12] pry(main)> Question.1
+(eval):2: no .<digit> floating literal anymore; put 0 before dot
+Question.1
+        ^~
+[12] pry(main)> Question.all
+  Question Load (0.3ms)  SELECT "questions".* FROM "questions"
+=> [#<Question:0x00007f8eeb8e71b0
+  id: 1,
+  title: "Whereis my question?",
+  body: "I don't know where my question is.",
+  created_at: Wed, 07 Jul 2021 17:33:03.666227000 UTC +00:00,
+  updated_at: Wed, 07 Jul 2021 17:33:03.666227000 UTC +00:00,
+  view_count: nil>]
+[13] pry(main)> q2 = Question.create({title:"My second question?". body:"Yes"})
+SyntaxError: unexpected symbol literal, expecting '}'
+...e:"My second question?". body:"Yes"})
+...                             ^~
+SyntaxError: unexpected '}', expecting end-of-input
+... second question?". body:"Yes"})
+...                              ^
+[13] pry(main)> q2 = Question.create({title:"My second question?", body:"Yes"})
+  TRANSACTION (0.1ms)  BEGIN
+  Question Create (1.8ms)  INSERT INTO "questions" ("title", "body", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["title", "My second question?"], ["body", "Yes"], ["created_at", "2021-07-07 17:36:58.616628"], ["updated_at", "2021-07-07 17:36:58.616628"]]
+  TRANSACTION (2.2ms)  COMMIT
+=> #<Question:0x00007f8eeb8ef900
+ id: 2,
+ title: "My second question?",
+ body: "Yes",
+ created_at: Wed, 07 Jul 2021 17:36:58.616628000 UTC +00:00,
+ updated_at: Wed, 07 Jul 2021 17:36:58.616628000 UTC +00:00,
+ view_count: nil>
+[14] pry(main)> q2.persisted?
+=> true
+[15] pry(main)> 
