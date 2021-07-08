@@ -34,5 +34,14 @@ module AwesomeAnswersMay2021
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.generators do |g|
+      #Don't create helper files when using 'rails generator'
+      #--no-helper
+      g.helper = false
+      #Don't create js & css files when using 'rails generator'
+      #--no-assets
+      g.assets = false
+    end
   end
 end

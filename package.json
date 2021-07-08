@@ -1,5 +1,5 @@
 {
-  "name": "awesome-answers-may-2021",
+  "name": "awesome-answers",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
