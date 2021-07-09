@@ -4,3 +4,36 @@
 <p>Created at:<%= @question.created_at %></p>
 <%= link_to 'Edit', edit_question_path(@question) %>
 <%= link_to 'Delete', question_path(@question), method: :delete, data: { confirm: "Are you sure?" } %>
+<hr/>
+
+<h3>Do you have an Answer?</h3>
+<%= form_with(model:[@question, @answer], local:true) do |f| %>
+<%# For Nested Routes: The form_with helper can take an Array of ActiveRecord varaibles, so then it will automatically generate the nested route  %> 
+<%# For update / patch request: if @answer is not persisted to the database the url will be question_answers_path(@question) and form will generate a POST request  and if @answer is persisted then the form path will be question_answer_path(@question,@answer) and form method will be PATH (by using the _method hidden field technique)
+%>
+<% if @answer.errors.full_messages.each do |msg| %>
+    <ul>
+        <li><%= msg %></li>
+    </ul>
+    <% end %>
+    <% end %>
+<div>
+    <%= f.text_area(:body, cols: 50, rows:5, placeholder: 'What are your thoughts?', class:'name_of_css_class')%>
+</div>
+    <%= f.submit 'Answer'%>
+<% end %>  
+
+<h3>Answers:</h3>
+<% @answers.each do |answer| %>
+    <%= answer.body %>
+    <%= link_to(
+        "Delete",
+        question_answer_path(@question, answer),
+        method: :delete,
+        data: {
+            confirm: "Are you sure?"
+        },
+        class: "some-css-class")
+    %>
+    <hr/>
+<% end %>

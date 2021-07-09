@@ -10,11 +10,15 @@
   </head>
 
   <body>
-    <%= flash[:notice] || flash[:alert] %>
-    <%= link_to 'Home', root_path  %> | 
-    <%= link_to 'Contact Us', contact_path %> |
-    <%= link_to 'New Question', new_question_path %> |
-    <%= link_to 'Questions Index', questions_path%> |
-    <%= yield %>
+    <nav>
+      <%= link_to 'Home', root_path  %> | 
+      <%= link_to 'Contact Us', contact_path %> |
+      <%= link_to 'New Question', new_question_path %> |
+      <%= link_to 'Questions Index', questions_path%> |
+    </nav>
+    <div>
+      <%= flash[:notice] || flash[:alert] %>
+    </div>
+      <%= yield %>
   </body>
 </html>

@@ -36,24 +36,37 @@ Rails.application.routes.draw do
   #------------------------------------------------------------------------------->
 
   #index
-  get("/questions", to: "questions#index")
+  # get("/questions", to: "questions#index")
 
-  #new
-  get('/questions/new', {to: 'questions#new', as: :new_question})
+  # #new
+  # get('/questions/new', {to: 'questions#new', as: :new_question})
 
-  #create
-  post('/questions', { to: 'questions#create', as: :create_question})
+  # #create
+  # post('/questions', { to: 'questions#create', as: :create_question})
 
-  #show
-  get("/questions/:id", {to: "questions#show", as: :question})
+  # #show
+  # get("/questions/:id", {to: "questions#show", as: :question})
 
-  #edit
-  get('/questions/:id/edit', {to: "questions#edit", as: :edit_question})
+  # #edit
+  # get('/questions/:id/edit', {to: "questions#edit", as: :edit_question})
 
-  #update
-  patch('/questions/:id', {to: "questions#update"})
+  # #update
+  # patch('/questions/:id', {to: "questions#update"})
 
-  #destroy
-  delete('/questions/:id', {to: "questions#destroy"})
+  # #destroy
+  # delete('/questions/:id', {to: 'questions#destroy', as: :destroy_question})
+
+  resources :questions do
+    #Routes written insode of a block passed to
+    #a resource method will be prefixed by
+    #a path corresponding to the passed in symbol.
+    #In this case, all nested routes will be pre-fixed
+    #with '/questions/:question_id'
+    resources :answers, only: [:create, :destroy]
+    #equivalent to :answers, except: [:show, :index, :new, :edit, :update]
+    # question_answers_path(<question_id>)
+    # question_answer_url(<question_id>)
+    # question_answer_path(@question)
+  end
 
 end

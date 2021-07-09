@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+ .answer-form {
+    width: 100px;
+    height: 200px;
+    border-radius: 3em;
+}

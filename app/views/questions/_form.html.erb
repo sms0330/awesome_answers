@@ -1,0 +1,44 @@
+<%# Partial templates are meant to be rendered inside other templates.
+    In rails, we prefix templates that are meant to be used as partials
+    with an `_`.
+%>
+<%# `form_for` is a helper method that expects you to give it an instance of a
+    model as its first argument. From that instance, `form_for` will automatically
+    pick the correct path to create appropriate `action`, fill in ids and classes
+    based on the model's name, fill in input fields values based on the columns
+    they represent, create for a new instance or editing and existing instance, etc.
+%>
+<%# `form_for` can determine if it should render a form as an edit or a new
+    based on whether or not the model instance passed in is `.persisted?`.
+    `.persisted?` is a method that returns true or false indicateing whether
+    or not an instance is saved to the database.
+%>
+<%#
+  To create a form for a resource (i.e. a model), use
+  the form_for helper instead of form_tag. Its usual
+  arguments are:
+  - A named argument 'model' which is assigned an
+  instance of a model (i.e. a new question)
+  - A named argument 'local', which will prevent
+  the form from submitting its data using AJAX.
+  - A block that is passed the form object, where
+   we build the HTML inside the form (i.e. labels,
+   inputs, submission buttons, etc.)
+    All data from the input fields a form built with this will have its name-value nested in a hash named
+   after the class of the passed in model
+   (e.g. <input type="text" name="question[title]" id="question_title"> => { "question": { "title": "What?"} })
+%>
+<%= form_for @question do |f| %>
+    <% if @question.errors.present? %>
+        <p><%= @question.errors.full_messages.join(', ') %></p>
+    <% end %>
+    <div>
+        <%= f.label :title %>
+        <%= f.text_field :title%>
+    </div>
+    <div>
+        <%= f.label :body %>
+        <%= f.text_field :body%>
+    </div>
+    <%= f.submit %>
+<% end %>
