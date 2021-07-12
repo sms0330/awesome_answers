@@ -3,6 +3,8 @@ class Answer < ApplicationRecord
   #rails g model answer body:text question:references
 
   #-----------------------------Associations--------------------------------->
+  belongs_to :user, optional: true
+  
   belongs_to :question
   #Above is similar to: validates :question_id, presence: true
   #If youb want to disable this constraint, you can add "optional: true" to the belongs_to method

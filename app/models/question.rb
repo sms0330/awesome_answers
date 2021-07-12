@@ -29,7 +29,8 @@ class Question < ApplicationRecord
     #has_many association says that a particular question can have many answers
     #dependent: :destroy means that if a question is deleted, all the associated answers will be destroyed as well
     #dependent: :nullify menat that if a question is deleted, the associated answers will have a question_id of null in the answers table column
-
+    #Association with USER MODEL
+    belongs_to :user, optional: true
 
     #--------------------VALIDATIONS------------------------------------>
     # Create validations by using the 'validates' method
@@ -217,4 +218,4 @@ end
     # CALLING RAW QUERIES
     # connection = ActiveRecord::Base.connection
     # result = connection.execute('SELECT * FROM questions WHERE id=1;')
-    # result.first 👈 because the result is an array of hashes
+    # result.first 👈 because the result is an array of hashes 

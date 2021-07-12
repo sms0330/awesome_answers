@@ -1,6 +1,9 @@
 <h1>Question Show Page</h1>
 <h2><%= @question.title %></h2>
 <p><%= @question.body %></p>
+<div>
+    Created_by: <%= @question.user&.full_name || "Deleted" %>
+</div>
 <p>Created at:<%= @question.created_at %></p>
 <%= link_to 'Edit', edit_question_path(@question) %>
 <%= link_to 'Delete', question_path(@question), method: :delete, data: { confirm: "Are you sure?" } %>
@@ -26,6 +29,10 @@
 <h3>Answers:</h3>
 <% @answers.each do |answer| %>
     <%= answer.body %>
+    <div>
+        Answered  by:
+        <%= answer.user&.full_name || "Deleted" %>
+    </div>
     <%= link_to(
         "Delete",
         question_answer_path(@question, answer),
@@ -37,3 +44,4 @@
     %>
     <hr/>
 <% end %>
+
