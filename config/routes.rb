@@ -72,7 +72,8 @@ Rails.application.routes.draw do
   resources :users, only:[:new, :create]
   resource :sessions, only:[:new, :create, :destroy]
   #resource generates CRUD for us; for sessions do not need /:id; cannot allow user to edit or show a particular session
-  #when using a singular resource it will generate all the routes for us but without the 'id; option
-  #there is no route generated that will have an :id wildcard at the end
+  #when using a singular resource it will generate all the routes for us but without the 'id' option
+  #there is no route generated that will have an :id wildcard at the end if use singular 'resource'
 
+  resources :job_posts, only: [:new, :create, :show, :index, :destroy, :edit, :update]
 end
