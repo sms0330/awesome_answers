@@ -25,7 +25,7 @@
       <% end %>
     </nav>
     <div>
-      <%= flash[:notice] || flash[:alert] %>
+      <%= render 'layouts/alerts' %>
     </div>
       <%= yield %>
   </body>
