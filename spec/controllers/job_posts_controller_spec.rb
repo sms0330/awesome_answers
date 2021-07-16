@@ -34,6 +34,15 @@ RSpec.describe JobPostsController, type: :controller do
                 #we cheack that the instance variable @job_post is a new instance of the Class JobPost (Model)
             end
         end
+        context "with user not signed in" do
+            before do 
+                session[:user_id] = nil
+            end
+            it "should redirect to the sign in page" do 
+                get(:new)
+                expect(response).to redirect_to(new_sessions_path)
+            end
+        end
     end
 
     describe "#create" do
@@ -171,6 +180,16 @@ RSpec.describe JobPostsController, type: :controller do
                 expect(response).to render_template :edit
             end
         end
+        context "with user not signed in" do
+            before do 
+                session[:user_id] = nil
+            end
+            it "should redirect to the sign in page" do 
+                job_post = FactoryBot.create(:job_post)
+                get(:edit, params: { id: job_post.id })
+                expect(response).to redirect_to(new_sessions_path)
+            end
+        end
     end
 
     describe "#update" do
@@ -234,6 +253,16 @@ RSpec.describe JobPostsController, type: :controller do
 
             it "sets a flash message that it was deleted" do
                 expect(flash[:danger]).to be #asserts that the danger property of the flash object exists
+            end
+        end
+        context "with user not signed in" do
+            before do 
+                session[:user_id] = nil
+            end
+            it "should redirect to the sign in page" do 
+                @job_post = FactoryBot.create(:job_post)
+                delete(:destroy, params: { id: @job_post.id })
+                expect(response).to redirect_to(new_sessions_path)
             end
         end
     end
