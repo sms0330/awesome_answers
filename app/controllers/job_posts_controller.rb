@@ -11,8 +11,9 @@ class JobPostsController < ApplicationController
                 :location,
                 :min_salary,
                 :max_salary,
-                :company_name
+                :company_name,
             )
+        @job_post.user = current_user
         if @job_post.save
             redirect_to job_post_path(@job_post)
         else
