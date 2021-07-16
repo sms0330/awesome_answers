@@ -168,16 +168,31 @@ RSpec.describe JobPostsController, type: :controller do
 
     describe "#edit" do
         context "with user signed in" do
-            before do 
-                session[:user_id] = FactoryBot.create(:user)
+            context "as owner" do
+                before do 
+                    current_user = FactoryBot.create(:user)
+                    session[:user_id] = current_user.id
+                    @job_post = FactoryBot.create(:job_post, user: current_user)
+                end
+                it "renders the edit template" do
+                    #GIVEN
+                    # job_post = FactoryBot.create(:job_post)
+                    #WHEN
+                    get(:edit, params: { id: @job_post.id })
+                    #THEN
+                    expect(response).to redirect_to root_path
+                end
             end
-            it "renders the edit template" do
-                #GIVEN
-                job_post = FactoryBot.create(:job_post)
-                #WHEN
-                get(:edit, params: { id: job_post.id })
-                #THEN
-                expect(response).to render_template :edit
+            context "as non owner" do
+                before do 
+                    current_user = FactoryBot.create(:user)
+                    session[:user_id] = current_user.id
+                    @job_post = FactoryBot.create(:job_post)
+                end
+                it "should redirect to show page" do
+                    get :edit, params: { id: @job_post.id }
+                    expect(response).to redirect_to root_path
+                end
             end
         end
         context "with user not signed in" do
@@ -185,8 +200,8 @@ RSpec.describe JobPostsController, type: :controller do
                 session[:user_id] = nil
             end
             it "should redirect to the sign in page" do 
-                job_post = FactoryBot.create(:job_post)
-                get(:edit, params: { id: job_post.id })
+                @job_post = FactoryBot.create(:job_post)
+                get(:edit, params: { id: @job_post.id })
                 expect(response).to redirect_to(new_sessions_path)
             end
         end
@@ -225,34 +240,50 @@ RSpec.describe JobPostsController, type: :controller do
                 job_post_after_update = JobPost.find(@job_post.id)
                 expect(job_post_after_update.title).to eq @job_post.title
                 end
-        
             end
         end
     end
     
     describe "#destroy" do
         context "with user signed in" do
-            before do 
-                session[:user_id] = FactoryBot.create(:user)
-                #this code will be run first before every single test within this describe block
-                #GIVEN
-                @job_post = FactoryBot.create(:job_post)
-                #WHEN
-                delete(:destroy, params: { id: @job_post.id })
-            end
+            context "as owner" do
+                before do
+                    current_user = FactoryBot.create(:user)
+                    session[:user_id] = current_user.id #this is now the signed in user
+                    #this code will be run first before every single test within this describe block
+                    #GIVEN
+                    @job_post = FactoryBot.create(:job_post, user: current_user)
+                    #WHEN
+                    delete(:destroy, params: { id: @job_post })
+                end
 
-            it "should remove a job post from the database" do
-                #THEN
-                expect(JobPost.find_by(id: @job_post.id)).to be(nil)
-            end
+                it "should remove a job post from the database" do
+                    #THEN
+                    expect(JobPost.find_by(id: @job_post.id)).to be(nil)
+                end
 
-            it "redirects to the job posts index" do
-                #THEN
-                expect(response).to redirect_to(job_posts_path)
-            end
+                it "redirects to the job posts index" do
+                    #THEN
+                    expect(response).to redirect_to(job_posts_path)
+                end
 
-            it "sets a flash message that it was deleted" do
-                expect(flash[:danger]).to be #asserts that the danger property of the flash object exists
+                it "sets a flash message that it was deleted" do
+                    expect(flash[:danger]).to be #asserts that the danger property of the flash object exists
+                end
+            end
+            context "as non owner" do
+                before do
+                    current_user = FactoryBot.create(:user)
+                    session[:user_id] = current_user.id #this is now the signed in user
+                    #this code will be run first before every single test within this describe block
+                    #GIVEN
+                    @job_post = FactoryBot.create(:job_post)
+                end
+                it "does not remove the job post" do
+                    #WHEN
+                    delete(:destroy, params: { id: @job_post.id })
+                    expect(JobPost.find(@job_post.id)).to eq(@job_post)
+                end
             end
         end
         context "with user not signed in" do

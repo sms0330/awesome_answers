@@ -3,14 +3,16 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(user) #expecting user from current_user
+    #expectation is that the current_user helper method is available in application controller
+
     # Define abilities for the passed in user here. For example:
     #
     user ||= User.new # guest user (not logged in)
     if user.is_admin?
       can :manage, :all #:all every model is made available 
     end
-    #   user ||= User.new # guest user (not logged in)
+
     #   if user.admin?
     #     can :manage, :all
     #   else
@@ -34,6 +36,7 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+
     alias_action(:create, :read, :update, :delete, to: :crud)
 
     can :crud, Question do |question|
@@ -44,5 +47,10 @@ class Ability
     can :crud, Answer do |answer|
       user==answer.user
     end
+
+    can :crud, JobPost do |job_post|
+      user == job_post.user
+    end
+
   end
 end
