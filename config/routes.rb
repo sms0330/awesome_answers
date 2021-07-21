@@ -71,6 +71,7 @@ Rails.application.routes.draw do
     #oroiginal route without shallow true would be something like this:
     #questions/19/likes/30
     #with shallow true: likes/30
+    get :liked, on: :collection
   end
 
   resources :users, only:[:new, :create]

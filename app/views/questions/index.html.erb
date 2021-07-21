@@ -2,8 +2,4 @@
 <p>I am found with the questions#index controller action</p>
 <p>and this route: get('/questions', {to: 'questions#index', as: :questions_index}</p>
 
-<%= @questions.each do |question| %>
-    <div>
-    <h2><%= link_to question.title, question_path(question) %></h2>
-    </div>
-<% end %>
+<%= render 'list' %>
