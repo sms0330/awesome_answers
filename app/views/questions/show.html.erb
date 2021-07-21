@@ -5,10 +5,10 @@
     created_by: <%= @question.user&.full_name || "Deleted" %>
 </div>
 <p>Asked: <%= @question.created_at %></p>
-<small>Liked by: <% @question.likes.count %> users</small>
+<small>Liked by: <%= @question.likes.count %> users</small>
 <small>
 <% if @like.present? %>
-        <%= button_to 'Unlike', question_likes_path(@question, like), method: :delete %>
+        <%= button_to 'Unlike', like_path(@like), method: :delete %>
     <% else %>
         <%= button_to 'Like', question_likes_path(@question), method: :post %>
     <% end %>
