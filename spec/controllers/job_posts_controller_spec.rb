@@ -180,7 +180,7 @@ RSpec.describe JobPostsController, type: :controller do
                     #WHEN
                     get(:edit, params: { id: @job_post.id })
                     #THEN
-                    expect(response).to redirect_to root_path
+                    expect(response).to render_template(:edit)
                 end
             end
             context "as non owner" do
@@ -248,13 +248,13 @@ RSpec.describe JobPostsController, type: :controller do
         context "with user signed in" do
             context "as owner" do
                 before do
-                    current_user = FactoryBot.create(:user)
-                    session[:user_id] = current_user.id #this is now the signed in user
-                    #this code will be run first before every single test within this describe block
-                    #GIVEN
-                    @job_post = FactoryBot.create(:job_post, user: current_user)
-                    #WHEN
-                    delete(:destroy, params: { id: @job_post })
+                    # this code will be run first before every single test within this describe block
+                    current_user=FactoryBot.create(:user)
+                    session[:user_id]=current_user.id
+                    # Given
+                    @job_post=FactoryBot.create(:job_post, user: current_user)
+                    # When
+                    delete(:destroy,params:{id: @job_post})
                 end
 
                 it "should remove a job post from the database" do
@@ -262,14 +262,15 @@ RSpec.describe JobPostsController, type: :controller do
                     expect(JobPost.find_by(id: @job_post.id)).to be(nil)
                 end
 
+                it "sets a flash message that it was deleted" do
+                    expect(flash[:alert]).to be  
+                end
+
                 it "redirects to the job posts index" do
                     #THEN
                     expect(response).to redirect_to(job_posts_path)
                 end
 
-                it "sets a flash message that it was deleted" do
-                    expect(flash[:danger]).to be #asserts that the danger property of the flash object exists
-                end
             end
             context "as non owner" do
                 before do

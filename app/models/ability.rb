@@ -37,7 +37,7 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
-    alias_action(:create, :read, :update, :delete, to: :crud)
+    alias_action(:create, :read, :update, :destroy, to: :crud)
 
     can :crud, Question do |question|
       user==question.user #owner of a particular question
@@ -50,6 +50,14 @@ class Ability
 
     can :crud, JobPost do |job_post|
       user == job_post.user
+    end 
+
+    can(:like, Question) do |question|
+      user.persisted? && question.user != user
+    end
+
+    can(:destroy, Like) do |like|
+      like.user == user
     end
 
   end

@@ -67,6 +67,10 @@ Rails.application.routes.draw do
     # question_answers_path(<question_id>)
     # question_answer_url(<question_id>)
     # question_answer_path(@question)
+    resources :likes, shallow: true, only: [:create, :destroy]
+    #oroiginal route without shallow true would be something like this:
+    #questions/19/likes/30
+    #with shallow true: likes/30
   end
 
   resources :users, only:[:new, :create]

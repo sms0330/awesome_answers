@@ -1,6 +1,7 @@
 class JobPostsController < ApplicationController
     # before_action :authenticate_user!, only: [:create]
     before_action :authenticate_user!, except: [:index, :show]
+    before_action :find_job_post, only:[:update, :edit,:destroy,:show]
     before_action :authorize_user!, only: [:edit, :destroy]
 
     def new
@@ -26,7 +27,7 @@ class JobPostsController < ApplicationController
     end
 
     def show
-        @job_post = JobPost.find params[:id]
+        # @job_post = JobPost.find params[:id]
     end
 
     def index
@@ -34,7 +35,7 @@ class JobPostsController < ApplicationController
     end
 
     def edit
-        @job_post = JobPost.find params[:id]
+        # @job_post = JobPost.find params[:id]
         if can?(:edit, @job_post)
             render :edit
         else
@@ -43,7 +44,7 @@ class JobPostsController < ApplicationController
     end
 
     def update
-        @job_post = JobPost.find params[:id]
+        # @job_post = JobPost.find params[:id]
         @job_post.update params.require(:job_post)
         .permit(
             :title,
@@ -57,17 +58,19 @@ class JobPostsController < ApplicationController
     end
 
     def destroy
-        @job_post = JobPost.find params[:id]
+        # @job_post = JobPost.find params[:id]
         if can?(:crud, @job_post)
             @job_post.destroy
-            flash[:danger] = "deleted job post"
+            flash[:alert] = "Deleted job post"
             redirect_to job_posts_path
-        else
-            redirect_to root_path
         end
     end
 
     private
+
+    def find_job_post
+        @job_post=JobPost.find params[:id]
+    end
 
     def authorize_user!
         redirect_to root_path, alert: 'Not authorized! please try again' unless can?(:crud, @job_post)

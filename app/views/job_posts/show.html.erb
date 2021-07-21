@@ -1,1 +1,14 @@
 <h1>Job Post Show Page</h1>
+<h2><%= @job_post.title %></h2>
+<p><%= @job_post.description %></p>
+<div>
+    created_by: <%= @job_post.user&.full_name || "Deleted" %>
+</div>
+<p>Asked: <%= @job_post.created_at %></p>
+<% if can? :crud, @job_post %>
+    <%= link_to 'Edit', edit_job_post_path(@job_post) %>
+<% end %>
+<% if can? :crud, @job_post %>
+    <%= button_to 'Delete', job_post_path(@job_post), method: :delete, data: { confirm: "Are you sure?" } %>
+<% end %>
+<hr/>
