@@ -49,6 +49,11 @@ class Question < ApplicationRecord
     has_many :likes
     has_many :likers, through: :likes, source: :user
 
+    has_many :taggings, dependent: :destroy
+    has_many :tags, through: :taggings #source: :tag
+    #If the name of the association (i.e. tags) is the same as the source singularized (i.e. tag)
+    #Then source names argument can be omitted
+
     #--------------------VALIDATIONS------------------------------------>
     # Create validations by using the 'validates' method
     # The arguments are (in order):

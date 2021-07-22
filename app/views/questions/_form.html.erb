@@ -13,6 +13,7 @@
     `.persisted?` is a method that returns true or false indicateing whether
     or not an instance is saved to the database.
 %>
+
 <%#
   To create a form for a resource (i.e. a model), use
   the form_for helper instead of form_tag. Its usual
@@ -28,6 +29,7 @@
    after the class of the passed in model
    (e.g. <input type="text" name="question[title]" id="question_title"> => { "question": { "title": "What?"} })
 %>
+
 <%= form_for @question do |f| %>
     <% if @question.errors.present? %>
         <p><%= @question.errors.full_messages.join(', ') %></p>
@@ -39,6 +41,14 @@
     <div>
         <%= f.label :body %>
         <%= f.text_field :body%>
+    </div>
+    <div class="tag-container">
+        <%= f.collection_check_boxes :tag_ids, Tag.order(name: :ASC), :id, :name do |t|  %>
+            <div class="tag-wrapper">
+                <%= t.check_box %>
+                <%= t.text %>
+            </div>
+        <% end %>
     </div>
     <%= f.submit %>
 <% end %>

@@ -1,6 +1,7 @@
 <h1>Question Show Page</h1>
 <h2><%= @question.title %></h2>
 <p><%= @question.body %></p>
+<p><strong>Tags:</strong><%= @question.tags.map(&:name).join(", ") %></p>
 <div>
     created_by: <%= @question.user&.full_name || "Deleted" %>
 </div>
