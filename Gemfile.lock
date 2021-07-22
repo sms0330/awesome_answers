@@ -193,6 +193,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    selectize-rails (0.12.6)
     semantic_range (3.0.0)
     spring (2.1.1)
     sprockets (4.0.2)
@@ -246,6 +247,7 @@ DEPENDENCIES
   rails-controller-testing
   rspec-rails
   sass-rails (>= 6)
+  selectize-rails
   spring
   tzinfo-data
   web-console (>= 4.1.0)
