@@ -5,7 +5,7 @@
     <p> Tags:
     <% @question.tags.each do |tag| %>
     <%= link_to(
-        tag.name, '/'
+        tag.name, questions_path(tag: tag.name)
     )%>
     <% end %>
     </p>

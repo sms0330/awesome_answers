@@ -10,10 +10,17 @@ class QuestionsController < ApplicationController
     #4. Destroy (#destroy)
 
     def index
-        @questions = Question.all.order(created_at: :desc) 
+        # @questions = Question.all.order(created_at: :desc) 
         #Model.all is a method built into active record used to return all records of that model
         #The @ sign is necessary to make the variable available to the view pages
         #It is called an "instance variable" - think of it almost like a global variable 
+        
+        if params[:tag]
+            @tag = Tag.find_or_initialize_by(name: params[:tag])
+            @questions = @tag.questions.all.order('updated_at DESC')
+        else
+            @questions = Question.all.order(created_at: :desc) 
+        end
     end
 
     def show
