@@ -81,4 +81,14 @@ Rails.application.routes.draw do
   #there is no route generated that will have an :id wildcard at the end if use singular 'resource'
 
   resources :job_posts, only: [:new, :create, :show, :index, :destroy, :edit, :update]
+
+  #Delayed Job Routes:
+  #We will go to this url to see this route: 'localhost:3000/delayed_job/overview'
+  match(
+    "/delayed_job",
+    to: DelayedJobWeb,
+    anchor: false,
+    via: [:get, :post]
+  )
+
 end
