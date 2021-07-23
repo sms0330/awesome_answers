@@ -33,6 +33,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'faker'
 gem 'cowsay', '~> 0.3.0'
 gem 'selectize-rails'
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

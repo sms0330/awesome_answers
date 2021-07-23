@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
     #This file was generated with: rails g controller answers
     before_action :authenticate_user!#called before both create and destroy
-    #before_action :authorize_user!, only: [:edit, :update, :destroy]
+    #before_action :authorize_user, only: [:edit, :update, :destroy]
 
     def create
         # /questions/:question_id/answers(.:format) -> Route for quick reference
@@ -13,6 +13,7 @@ class AnswersController < ApplicationController
         
         @answer.save
         if @answer.persisted?
+            AnswerMailer.new_answer(@answer).deliver_now
             redirect_to question_path(@question), notice: 'Answer created!' 
         else
             redirect_to question_path(@question)  

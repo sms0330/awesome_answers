@@ -160,3 +160,4 @@ build-iPhoneSimulator/
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+/config/initializers/api_keys.rb

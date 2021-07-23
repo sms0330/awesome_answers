@@ -38,10 +38,11 @@ Rails.application.configure do
   # Convert it to true so that mailers won't fail silently
 
   #Also add below for mailers
-  config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   #Above configs were taken from docs: https://github.com/ryanb/letter_opener
-  
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   config.action_mailer.perform_caching = false
 
