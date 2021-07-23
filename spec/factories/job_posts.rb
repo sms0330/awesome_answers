@@ -1,8 +1,8 @@
 FactoryBot.define do
-  RANDOM_HUNDRED_CHARS = "hello world hello world hello world hello world hello world hello world hello world hello hello worl hello world hello world"
+  random_hudred_chars = "hello world hello world hello world hello world hello world hello world hello world hello hello worl hello world hello world"
   factory :job_post do
     sequence(:title) {|n| Faker::Job.title + " #{n}"} #sequence is a method provided by factory-bot which accepts a lambda injecting a variable n. n is usually a number that factory-bot increments on every object it generates so we can use it to make sure all instances created are unique
-    description { Faker::Job.field + "-#{RANDOM_HUNDRED_CHARS}"}
+    description { Faker::Job.field + "-#{random_hudred_chars}"}
     company_name { Faker::Company.name}
     min_salary { rand( 80_000..200_000)}
     max_salary { rand(200_000..400_000)}
