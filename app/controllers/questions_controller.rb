@@ -20,6 +20,14 @@ class QuestionsController < ApplicationController
             @questions = @tag.questions.all.order('updated_at DESC')
         else
             @questions = Question.all.order(created_at: :desc) 
+
+            #You can access json data from server without the browser
+            #through cli command curl
+            #Example: curl -H "Accept: application/json" http://localhost:3000/questions
+            respond_to do |format|
+                format.html { render }
+                format.json { render json: @questions }
+            end 
         end
     end
 

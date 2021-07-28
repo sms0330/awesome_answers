@@ -90,5 +90,20 @@ Rails.application.routes.draw do
     anchor: false,
     via: [:get, :post]
   )
+  
+  #---------------------API routes----------------------------->
+  #The namespace method in Rails makes it so that your app will automatically
+  #look in a directory called api, then in a sub directory called v1 for QuestionsController
+  #api/v1/questions
+
+  #The option 'defaults: {format: :json } will set json as the default response 
+  #format for all routes contained within the block
+  namespace :api, defaults:{format: :json } do
+    namespace :v1 do
+      resources :questions
+      resource :session, only: [:create, :destroy]
+      resources :users, only: [:create]
+    end
+  end
 
 end
