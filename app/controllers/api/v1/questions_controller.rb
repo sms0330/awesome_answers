@@ -6,8 +6,8 @@ class Api::V1::QuestionsController < Api::ApplicationController
     # Make sure to inherit from the Api::ApplicationController instead of
     # ApplicationController
 
-    before_action :find_question, only: [:show, :destroy]
-    before_action :authenticate_user!, only: [ :create, :destroy ]
+    before_action :find_question, only: [:show, :update, :destroy]
+    before_action :authenticate_user!, only: [ :create, :destroy, :update ]
 
     def index
         #curl -H "Accept: application/json" http://localhost:3000api/v1/questions
@@ -35,16 +35,27 @@ class Api::V1::QuestionsController < Api::ApplicationController
             render(
                 json: { errors: question.errors.messages },
                 status: 422 #Unprocessable entity
-            )
+            ) 
         end
     end
 
-    def destroy
-        if @question || @question.destroy
-            head :ok
-        else
-            head :bad_request
+    #don't need edit within our spa as we are using a combination of different methods (difference between our normal rails erb apps and spa)
+    def update
+        #receive data coming from the front end and save it in db
+        if @question.update question_params
+            render json: {id: @question.id} #want to send id back to the user that was successfully updated
+        else 
+            render(
+                json: { errors: @question.errors.messages },
+                status: 422 #Unprocessable entity
+            ) 
         end
+
+    end
+
+    def destroy
+        @question.destroy
+        render(json: {status: 200}, status: 200)
     end
 
     private
