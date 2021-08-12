@@ -8,9 +8,13 @@ class Api::V1::UsersController < Api::ApplicationController
             render json: { id: user.id }
         else
             render(
-                json: { errors: user.errors.messages }
+                json: { errors: user.errors.messages },
                 status: 422 #Unprocessable Entity
             )
         end
+    end
+
+    def current
+        render json: current_user
     end
 end
