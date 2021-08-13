@@ -10,6 +10,12 @@ class Api::ApplicationController < ApplicationController
     # needed for public HTTP apis, so we'll skip it.
     skip_before_action :verify_authenticity_token
 
+    #There is a built-in Rails "rescue_from" method we can use to prevent class crashes.
+    #You pass the error class you want to rescue, and give it a named method
+    #you want to rescue it with
+    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+
     #Error message handling
     #To send a json error message when a user types in, for example: localhost:3000/api/v1/wrongthing
     def not_found
@@ -33,4 +39,21 @@ class Api::ApplicationController < ApplicationController
             )
         end
     end
+
+    protected
+    #protected is like a private except that it prevents
+    #decendent classes from using protected methods
+    def record_not_found(error)
+        render(
+            status: 404,
+            json: {
+                status: 404,
+                errors: [{
+                    type: error.class.to_s,
+                    message: error.message
+                }]
+            }
+        )
+    end
+
 end
