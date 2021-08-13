@@ -10,6 +10,17 @@ class Api::ApplicationController < ApplicationController
     # needed for public HTTP apis, so we'll skip it.
     skip_before_action :verify_authenticity_token
 
+    #rescue_from PRIORITY
+    #The priority of rescue_from is in the reverse order of where the calls are made,
+    #meaning that the more specific errors should be rescued last and general errors should
+    #be rescued first
+
+    #The StandError class is an ancestor of all the errors that programmers could possibly
+    #cause in their program.  Rescuing from it will prevent nearly
+    #all errors from crashing the program
+    #NOTE: Use this very carefully and make sure to always log the error messages in some form
+    rescue_from StandardError, with: :standard_error
+
     #There is a built-in Rails "rescue_from" method we can use to prevent class crashes.
     #You pass the error class you want to rescue, and give it a named method
     #you want to rescue it with
@@ -43,6 +54,29 @@ class Api::ApplicationController < ApplicationController
     protected
     #protected is like a private except that it prevents
     #decendent classes from using protected methods
+
+    def standard_error(error)
+        #When we rescue an error, we prevent our program from doing what
+        #it normally would do - crashing, such as logging the details
+        #and the backtrace.  it's important to always log this information
+        #when rescuing a general type
+
+        #Use the logger.error method with an error's message to
+        #log the error details again
+        logger.error error.full_message
+
+        render(
+            status: 500,
+            json:{
+                status:500,
+                errors:[{
+                    type: error.class.to_s,
+                    message: error.message
+                }]
+            }
+        )
+    end
+
     def record_not_found(error)
         render(
             status: 404,

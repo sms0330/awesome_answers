@@ -22,6 +22,8 @@ class QuestionSerializer < ActiveModel::Serializer
 
   #-----------------------------Associations--------------->
 
+  # To include associate models, we can use the same "belongs_to" and "has_many" methods.
+  # We can rename the associate with "key" in the serialized output.
   belongs_to :user, key: :author
 
   class UserSerializer < ActiveModel::Serializer
@@ -29,6 +31,10 @@ class QuestionSerializer < ActiveModel::Serializer
   end
 
   has_many :answers
+
+  # To customize serialization for associated models, we can define a serializer
+  # within the current serializer. This would replace any global serializer 
+  # whenever we are serializing questions.
   class AnswerSerializer < ActiveModel::Serializer
     attributes :id, :body, :created_at, :updated_at, :author_full_name
 
