@@ -6,7 +6,7 @@ class CreateGifts < ActiveRecord::Migration[6.1]
       t.integer :amount
       t.string :status
       t.text :security_key
-      t.references :answer, null: false, foreign_key:
+      t.references :answer, null: false, foreign_key: true
 
       t.timestamps
     end
