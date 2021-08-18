@@ -25,6 +25,9 @@ class User < ApplicationRecord
     has_many :likes
     has_many :liked_questions, through: :likes, source: :question
 
+    has_many :sent_gitfs, class_name: 'Gift', foreign_key: :sender_id, dependent: :nullify
+    has_many :received_gifts, class_name: 'Gift', foreign_key: :receiver_id, dependent: :nullify
+        
     has_secure_password
     # What it needs
     # has_secure_password need password digest column in the database user table 

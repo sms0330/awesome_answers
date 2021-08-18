@@ -1,0 +1,17 @@
+<h1>Gift User</h1>
+
+<% if @gift.errors.any? %>
+    <% @gift.errors.full_messages.each do |message| %>
+    <div class="alert alert-danger" role="alert">
+        <%= message %>
+    </div>
+    <% end %>
+<% end %>
+
+<%= form_for @gift, url: answer_gifts_path do |f| %>
+    <div>
+        <%= f.label :amount %>
+        <%= f.number_field :amount %>
+    </div>
+    <%= f.submit 'Gift User', class: 'btn btn-primary'%>
+<% end %>

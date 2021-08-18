@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_23_180224) do
+ActiveRecord::Schema.define(version: 2021_08_18_162126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,18 @@ ActiveRecord::Schema.define(version: 2021_07_23_180224) do
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "gifts", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.integer "amount"
+    t.string "status"
+    t.text "security_key"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "answer_id", null: false
+    t.index ["answer_id"], name: "index_gifts_on_answers_id"
   end
 
   create_table "job_posts", force: :cascade do |t|
@@ -102,6 +114,7 @@ ActiveRecord::Schema.define(version: 2021_07_23_180224) do
 
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
+  add_foreign_key "gifts", "answers"
   add_foreign_key "job_posts", "users"
   add_foreign_key "likes", "questions"
   add_foreign_key "likes", "users"

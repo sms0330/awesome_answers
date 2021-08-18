@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
         
         @answer.save
         if @answer.persisted?
-            AnswerMailer.new_answer(@answer).deliver_now
+            # AnswerMailer.new_answer(@answer).deliver_now
             redirect_to question_path(@question), notice: 'Answer created!' 
         else
             redirect_to question_path(@question)  

@@ -59,11 +59,18 @@
     <% if can? :crud, answer %>
         <%= button_to(
             "Delete",
-            question_answer_path(@question, answer),
+            answer_path(answer),
             method: :delete,
             data: {
                 confirm: "Are you sure?"
             },
+            class: "some-css-class")
+        %>
+    <% end %>
+    <% if current_user %>
+        <%= link_to(
+            "Gift",
+            new_answer_gift_path(answer),
             class: "some-css-class")
         %>
     <% end %>

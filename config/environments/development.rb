@@ -9,6 +9,8 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Do not eager load code on boot.
+
+
   config.eager_load = false
 
   # Show full error reports.
@@ -32,6 +34,11 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
+
+  #Stripe Configuration
+  #When we make a req to Stripe it will debug inside our console
+  config.stripe.debug_js = true
+  config.stripe.publishable_key = 'pk_test_51JPsMnC3SMTwTswI18mNzLVYEJXxf59D3odhJWAk9YLLbwsrlrwTZt3TZbtnlOaWFVmXpzn0rh8pERs9djk97Zaz00cMKnvLOO'
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true #👈 this is here by default, but we need it for mailers. 

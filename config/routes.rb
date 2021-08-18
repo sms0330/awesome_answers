@@ -62,13 +62,16 @@ Rails.application.routes.draw do
     #a path corresponding to the passed in symbol.
     #In this case, all nested routes will be pre-fixed
     #with '/questions/:question_id'
-    resources :answers, only: [:create, :destroy]
+    resources :answers, only: [:create, :destroy], shallow: true do
+      resources :gifts, only: [:new, :create]
+      get '/gifts/complete', to: 'gifts#complete'
+    end
     #equivalent to :answers, except: [:show, :index, :new, :edit, :update]
     # question_answers_path(<question_id>)
     # question_answer_url(<question_id>)
     # question_answer_path(@question)
     resources :likes, shallow: true, only: [:create, :destroy]
-    #oroiginal route without shallow true would be something like this:
+    #original route without shallow true would be something like this:
     #questions/19/likes/30
     #with shallow true: likes/30
     get :liked, on: :collection
