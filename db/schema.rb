@@ -46,10 +46,10 @@ ActiveRecord::Schema.define(version: 2021_08_18_162126) do
     t.integer "amount"
     t.string "status"
     t.text "security_key"
+    t.bigint "answer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "answer_id", null: false
-    t.index ["answer_id"], name: "index_gifts_on_answers_id"
+    t.index ["answer_id"], name: "index_gifts_on_answer_id"
   end
 
   create_table "job_posts", force: :cascade do |t|
