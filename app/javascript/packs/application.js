@@ -2,16 +2,24 @@
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
+
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+
 Rails.start()
 ActiveStorage.start()
+
 import "bootstrap";
+import "underscore";
 import '../stylesheets/application'
 //import '../packs/question'
 import './selectize';
 window.jQuery = $;
 window.$ = $;
+
+import Gmaps from "./gmaps_google";
+
 console.log("Hello from app/javascript/packs/application.js")
+
 //using webpack to compile all of our assets 

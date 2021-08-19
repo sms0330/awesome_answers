@@ -6,6 +6,8 @@ class Answer < ApplicationRecord
   belongs_to :user, optional: true
   
   belongs_to :question
+
+  has_many :gifts, dependent: :destroy
   #Above is similar to: validates :question_id, presence: true
   #If youb want to disable this constraint, you can add "optional: true" to the belongs_to method
   # Primary Key: Any id / integer refering to the column in its own table is known as primary key
